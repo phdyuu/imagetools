@@ -47,14 +47,14 @@ function res = toDNA(m, flags, op, v)
         case 'dynamic'
             count = 1;
             for i = 1:2:l
-                dmap = DNAca(flags(count), v);
+                dmap = DNAca(flags(count), 3, v);
                 count = count+1;
                 tmp = [m(i), m(i+1)];
                 res = [res, dmap(tmp)];
             end
             
         case 'static'
-            dmap = DNAca(flags, 3);
+            dmap = DNAca(flags, 3, v);
             for i = 1:2:l
                 tmp = [m(i), m(i+1)];
                 res = [res, dmap(tmp)];
@@ -63,7 +63,7 @@ function res = toDNA(m, flags, op, v)
     
 end
 
-function ca = DNAca(flag, v)
+function ca = DNAca(flag, v, v)
         key = {'00', '01', '10', '11'};
         switch v
             case 1
