@@ -1,4 +1,5 @@
-function [flags, res] = dna_encode(m, op, v)
+function [flags, res] = dna_encode2(m, op, v, varargin)
+    tmpFlags = cell2mat(varargin(:));
     [h, w] = size(m);
     tmp = [];
     for i = 1:h
@@ -13,26 +14,30 @@ function [flags, res] = dna_encode(m, op, v)
             count = 2;
             flags = [];
             flags(1) = 1;
-            for i = 3:2:length(tmp)
-                curr = [tmp(i), tmp(i+1)];
-                pre  = [tmp(i-2), tmp(i-1)];
-                if curr == pre
-                    if f < 4           
-                        f = f +1;
-                        flags(count) = f;
-                        count = count+1;
+            if isempty(tmpFlags) 
+                for i = 3:2:length(tmp)
+                    curr = [tmp(i), tmp(i+1)];
+                    pre  = [tmp(i-2), tmp(i-1)];
+                    if curr == pre
+                        if f < 4           
+                            f = f +1;
+                            flags(count) = f;
+                            count = count+1;
+                        else
+                            f = 1;
+                            flags(count) = f;
+                            count = count +1;
+                        end
+
                     else
-                        f = 1;
                         flags(count) = f;
-                        count = count +1;
+                        count = count + 1;
                     end
-                else
-                    flags(count) = f;
-                    count = count + 1;
                 end
+            else 
+                flags = tmpFlags;
             end
             res = toDNA(tmp, flags, 'dynamic', v);
-            
         case 'static'
             flags = v;
             res = toDNA(tmp, flags, 'static', v);

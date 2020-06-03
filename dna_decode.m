@@ -1,4 +1,4 @@
-function res = dna_decode(m, flags, h, w, op, varargin)
+function res = dna_decode2(m, flags, h, w, op, varargin)
     v = cell2mat(varargin(:));
     tmp = [];
     switch op
@@ -15,7 +15,7 @@ function res = dna_decode(m, flags, h, w, op, varargin)
     end    
     res = reshape(tmp, 8, [])';
     res = bin2dec(res);
-    res = reshape(res, h, w);
+    res = reshape(res, h, w)';
 end
 
 
